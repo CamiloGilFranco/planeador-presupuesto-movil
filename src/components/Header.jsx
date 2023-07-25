@@ -1,23 +1,23 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, SafeAreaView} from 'react-native';
 
 const Header = () => {
   return (
-    <View style={styles.header}>
+    <SafeAreaView>
       <Text style={styles.texto}>Planificador de Gastos</Text>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  header: {backgroundColor: '#3b82f6'},
+  header: {},
   texto: {
     textAlign: 'center',
     fontSize: 30,
     color: '#fff',
     textTransform: 'uppercase',
     fontWeight: 'bold',
-    paddingVertical: 20,
+    paddingTop: 20,
   },
 });
 
