@@ -33,15 +33,24 @@ const App = () => {
   };
 
   const handleGasto = gasto => {
-    if (Object.values(gasto).includes('')) {
+    if ([gasto.nombre, gasto.categoria, gasto.cantidad].includes('')) {
       Alert.alert('Error', 'Todos los campos son obligatorios');
       return;
     }
 
-    gasto.id = generarId();
-    gasto.fecha = Date.now();
+    if (gasto.id) {
+      const gastosActualizados = gastos.map(gastoState =>
+        gastoState.id === gasto.id ? gasto : gastoState,
+      );
 
-    setGastos([...gastos, gasto]);
+      setGastos(gastosActualizados);
+    } else {
+      gasto.id = generarId();
+      gasto.fecha = Date.now();
+
+      setGastos([...gastos, gasto]);
+    }
+
     setModal(!modal);
   };
 
@@ -53,11 +62,14 @@ const App = () => {
           {isValidPresupuesto ? (
             <ControlPresupuesto presupuesto={presupuesto} gastos={gastos} />
           ) : (
-            <NuevoPresupuesto
-              handleNuevoPresupuesto={handleNuevoPresupuesto}
-              presupuesto={presupuesto}
-              setPresupuesto={setPresupuesto}
-            />
+            <>
+              <NuevoPresupuesto
+                handleNuevoPresupuesto={handleNuevoPresupuesto}
+                presupuesto={presupuesto}
+                setPresupuesto={setPresupuesto}
+              />
+              <View style={styles.espacio}></View>
+            </>
           )}
         </View>
 
@@ -79,6 +91,7 @@ const App = () => {
             setModal={setModal}
             handleGasto={handleGasto}
             setGasto={setGasto}
+            gasto={gasto}
           />
         </Modal>
       )}
@@ -96,7 +109,12 @@ const styles = StyleSheet.create({
   contenedor: {backgroundColor: '#f5f5f5', flex: 1},
   header: {
     backgroundColor: '#3b82f6',
-    minHeight: 400,
+  },
+  espacio: {
+    backgroundColor: '#f5f5f5',
+    height: 400,
+    position: 'relative',
+    zIndex: -1,
   },
   imagen: {width: 60, height: 60, position: 'absolute', bottom: 40, right: 30},
 });

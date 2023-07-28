@@ -1,5 +1,5 @@
 import {Picker} from '@react-native-picker/picker';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Pressable,
   SafeAreaView,
@@ -10,10 +10,24 @@ import {
 } from 'react-native';
 import globalStyles from '../styles';
 
-const FormularioGasto = ({setModal, handleGasto, setGasto}) => {
+const FormularioGasto = ({setModal, handleGasto, setGasto, gasto}) => {
   const [nombre, setNombre] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [categoria, setCategoria] = useState('');
+  const [id, setId] = useState('');
+  const [fecha, setFecha] = useState('');
+
+  useEffect(() => {
+    if (gasto?.nombre) {
+      setNombre(gasto.nombre);
+      setCantidad(gasto.cantidad);
+      setCategoria(gasto.categoria);
+      setId(gasto.id);
+      setFecha(gasto.fecha);
+    } else {
+    }
+  }, [gasto]);
+
   return (
     <SafeAreaView style={styles.contenedor}>
       <View>
@@ -28,7 +42,9 @@ const FormularioGasto = ({setModal, handleGasto, setGasto}) => {
       </View>
 
       <View style={styles.formulario}>
-        <Text style={styles.titulo}>Nuevo Gasto</Text>
+        <Text style={styles.titulo}>
+          {gasto?.nombre ? 'Editar ' : 'Nuevo '}Gasto
+        </Text>
 
         <View style={styles.campo}>
           <Text style={styles.label}>Nombre Gasto</Text>
@@ -69,8 +85,10 @@ const FormularioGasto = ({setModal, handleGasto, setGasto}) => {
 
         <Pressable
           style={styles.submitBtn}
-          onPress={() => handleGasto({nombre, cantidad, categoria})}>
-          <Text style={styles.submitBtnTexto}>Agregar Gasto</Text>
+          onPress={() => handleGasto({nombre, cantidad, categoria, id, fecha})}>
+          <Text style={styles.submitBtnTexto}>
+            {gasto?.nombre ? 'Guardar ' : 'Agregar '}Gasto
+          </Text>
         </Pressable>
       </View>
     </SafeAreaView>
