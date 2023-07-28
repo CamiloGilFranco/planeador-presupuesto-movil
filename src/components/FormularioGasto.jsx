@@ -10,7 +10,13 @@ import {
 } from 'react-native';
 import globalStyles from '../styles';
 
-const FormularioGasto = ({setModal, handleGasto, setGasto, gasto}) => {
+const FormularioGasto = ({
+  setModal,
+  handleGasto,
+  setGasto,
+  gasto,
+  eliminarGasto,
+}) => {
   const [nombre, setNombre] = useState('');
   const [cantidad, setCantidad] = useState('');
   const [categoria, setCategoria] = useState('');
@@ -30,14 +36,20 @@ const FormularioGasto = ({setModal, handleGasto, setGasto, gasto}) => {
 
   return (
     <SafeAreaView style={styles.contenedor}>
-      <View>
+      <View style={styles.contenedorBotones}>
         <Pressable
-          style={styles.btnCancelar}
+          style={[styles.btn, styles.btnCancelar]}
           onPress={() => {
             setModal(false);
             setGasto(false);
           }}>
-          <Text style={styles.btnCancelarTexto}>Cancelar</Text>
+          <Text style={styles.btnTexto}>Cancelar</Text>
+        </Pressable>
+
+        <Pressable
+          style={[styles.btn, styles.btnEliminar]}
+          onPress={() => eliminarGasto(id)}>
+          <Text style={styles.btnTexto}>Eliminar</Text>
         </Pressable>
       </View>
 
@@ -99,11 +111,11 @@ const styles = StyleSheet.create({
   contenedor: {backgroundColor: '#1e40af', flex: 1},
   btnCancelar: {
     backgroundColor: '#db2777',
-    padding: 10,
-    marginTop: 30,
-    marginHorizontal: 10,
   },
-  btnCancelarTexto: {
+  btn: {padding: 10, marginTop: 30, marginHorizontal: 10, flex: 1},
+  contenedorBotones: {flexDirection: 'row', justifyContent: 'space-between'},
+  btnEliminar: {backgroundColor: 'red'},
+  btnTexto: {
     textAlign: 'center',
     textTransform: 'uppercase',
     fontWeight: 'bold',
