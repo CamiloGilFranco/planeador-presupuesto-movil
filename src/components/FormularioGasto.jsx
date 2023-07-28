@@ -41,7 +41,7 @@ const FormularioGasto = ({
           style={[styles.btn, styles.btnCancelar]}
           onPress={() => {
             setModal(false);
-            setGasto(false);
+            setGasto({});
           }}>
           <Text style={styles.btnTexto}>Cancelar</Text>
         </Pressable>
