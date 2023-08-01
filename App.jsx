@@ -64,8 +64,6 @@ const App = () => {
       try {
         const gastosStorage = await AsyncStorage.getItem('planificador_gastos');
 
-        console.log(gastosStorage);
-
         setGastos(gastosStorage ? JSON.parse(gastosStorage) : setGastos([]));
       } catch (error) {
         console.log(error);
